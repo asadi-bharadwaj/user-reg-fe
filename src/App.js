@@ -8,6 +8,10 @@ function App() {
     setShowRegister(true);
   };
 
+  const handleCloseForm = () => {
+    setShowRegister(false);
+  };
+
   return (
     <div className="app-container">
       {!showRegister && (
@@ -27,6 +31,11 @@ function App() {
 
       {showRegister && (
         <div className="form-container">
+          {/* Close button */}
+          <span className="close-btn" onClick={handleCloseForm}>
+            &times;
+          </span>
+
           <h2 className="form-title">Register</h2>
           <form className="register-form">
             <input type="text" placeholder="Username" />
