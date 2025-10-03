@@ -164,3 +164,69 @@
   text-align: left;
   letter-spacing: 0.3px;   /* cleaner look */
 }
+
+/* Success card styling */
+.success-card {
+  background-color: #111; /* dark premium background */
+  border-radius: 15px;
+  padding: 40px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  animation: fadeZoomIn 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Success card heading */
+.success-card h2 {
+  color: #4caf50; /* subtle green for success */
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Success card paragraph */
+.success-card p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Success card button matches premium buttons */
+.success-card .premium-btn {
+  border: 1px solid white;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.success-card .premium-btn:hover {
+  background-color: white;
+  color: black;
+  transform: scale(1.05);
+}
+
+/* Fade + zoom animation for success card */
+@keyframes fadeZoomIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

@@ -4,118 +4,111 @@ import "./App.css";
 function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
-  const [errors, setErrors] = useState({});
-
-  const handleRegisterClick = () => {
-    setShowRegister(true);
-  };
-
-  const handleCloseForm = () => {
-    setShowRegister(false);
-    setFormData({ username: "", email: "", password: "" });
-    setErrors({});
-  };
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showSuccessCard, setShowSuccessCard] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Email validation
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address";
-    }
-
-    // Password validation
-    if (formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters long";
-    }
-    if (!/[0-9]/.test(formData.password)) {
-      newErrors.password = "Password must contain at least one number";
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) {
-      newErrors.password = "Password must contain at least one special character";
-    }
-
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
+    setError("");
+    setSuccess("");
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+    try {
+      const response = await fetch("http://localhost:8081/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const msg = await response.text();
+        setSuccess(msg || "Registration successful 🎉");
+        setFormData({ username: "", email: "", password: "" }); // reset form
+        setShowRegister(false);
+        setShowSuccessCard(true); // show success card
+      } else {
+        const errorMsg = await response.text();
+        setError(errorMsg || "Registration failed ❌");
+      }
+    } catch (err) {
+      setError("Server not reachable. Try again later.");
     }
-
-    // 🚀 Call backend API (POST /register)
-    console.log("Submitting Data:", formData);
-
-    // Reset form
-    setFormData({ username: "", email: "", password: "" });
-    setErrors({});
-    setShowRegister(false);
   };
 
   return (
     <div className="app-container">
-      {!showRegister && (
-        <>
-          {/* Top-right buttons */}
-          <div className="top-right-buttons">
-            <button className="premium-btn" onClick={handleRegisterClick}>
+      {/* Top-right buttons */}
+      <div className="top-right-buttons">
+        {!showRegister && !showSuccessCard && (
+          <>
+            <button className="premium-btn" onClick={() => setShowRegister(true)}>
               Register
             </button>
             <button className="premium-btn">Login</button>
-          </div>
+          </>
+        )}
+      </div>
 
-          {/* Centered app name */}
-          <h1 className="app-title">project-X</h1>
-        </>
-      )}
+      {/* Title */}
+      {!showRegister && !showSuccessCard && <h1 className="app-title">project-X</h1>}
 
+      {/* Registration form */}
       {showRegister && (
         <div className="form-container">
-          {/* Close button */}
-          <span className="close-btn" onClick={handleCloseForm}>
-            &times;
+          <span className="close-btn" onClick={() => setShowRegister(false)}>
+            ×
           </span>
-
           <h2 className="form-title">Register</h2>
-          <form className="register-form" onSubmit={handleSubmit}>
+          <form className="register-form" onSubmit={handleRegister}>
             <input
               type="text"
               name="username"
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
+              required
             />
-
             <input
               type="email"
               name="email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
-            {errors.email && <p className="error">{errors.email}</p>}
-
             <input
               type="password"
               name="password"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
+              required
             />
-            {errors.password && <p className="error">{errors.password}</p>}
-
             <button type="submit" className="submit-btn">
               Register
             </button>
           </form>
+
+          {/* Error message */}
+          {error && <p className="error">{error}</p>}
+        </div>
+      )}
+
+      {/* Success card after registration */}
+      {showSuccessCard && (
+        <div className="success-card">
+          <h2>🎉 Registration Successful!</h2>
+          <p>Please login to continue.</p>
+          <button
+            className="premium-btn"
+            onClick={() => setShowSuccessCard(false)}
+          >
+            Go to Login
+          </button>
         </div>
       )}
     </div>
