@@ -4,16 +4,15 @@ import "./App.css";
 function App() {
   return (
     <div
-      style={{
-        height: "100vh",
-        width: "100vw",
-        backgroundColor: "black",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "'Doto', sans-serif",
-      }}
+      className="app-container" // move inline styles to CSS for cleaner code
     >
+      {/* Top-right buttons */}
+      <div className="top-right-buttons">
+        <button className="premium-btn">Register</button>
+        <button className="premium-btn">Login</button>
+      </div>
+
+      {/* Centered app name */}
       <h1 className="app-title">project-X</h1>
     </div>
   );

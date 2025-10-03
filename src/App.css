@@ -1,3 +1,14 @@
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* needed for absolute positioning of buttons */
+  font-family: 'Doto', sans-serif;
+}
+
 @keyframes zoomIn {
   0% {
     transform: scale(0.8);
@@ -20,3 +31,30 @@
   animation: zoomIn 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
+/* Top-right buttons container */
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+/* Premium button style */
+.premium-btn {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 25px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.premium-btn:hover {
+  background-color: white;
+  color: black;
+  transform: scale(1.05);
+}
