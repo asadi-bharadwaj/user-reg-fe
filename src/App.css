@@ -86,7 +86,8 @@
   flex-direction: column;
   gap: 12px; /* spacing between inputs */
   width: 100%;
-  max-width: 280px;
+  min-width: 280px;
+  max-width: 400px;
 }
 
 .register-form input {
@@ -98,6 +99,8 @@
   font-size: 16px;
   outline: none;
   transition: all 0.3s ease;
+  width: 100%; /* take full form width */
+  box-sizing: border-box; /* prevent overflow */
 }
 
 .register-form input:focus {
@@ -154,8 +157,10 @@
 
 .error {
   color: #ff4d4d;
-  font-size: 12px;
-  margin-left: 5px;
+  font-size: 14px;         /* slightly bigger */
+  font-weight: 600;        /* bold */
+  margin-top: -5px;
+  margin-bottom: 12px;
   text-align: left;
-  animation: fadeError 0.3s ease forwards;
+  letter-spacing: 0.3px;   /* cleaner look */
 }
