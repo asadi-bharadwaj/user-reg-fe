@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  return (
-    <div
-      className="app-container" // move inline styles to CSS for cleaner code
-    >
-      {/* Top-right buttons */}
-      <div className="top-right-buttons">
-        <button className="premium-btn">Register</button>
-        <button className="premium-btn">Login</button>
-      </div>
+  const [showRegister, setShowRegister] = useState(false);
 
-      {/* Centered app name */}
-      <h1 className="app-title">project-X</h1>
+  const handleRegisterClick = () => {
+    setShowRegister(true);
+  };
+
+  return (
+    <div className="app-container">
+      {!showRegister && (
+        <>
+          {/* Top-right buttons */}
+          <div className="top-right-buttons">
+            <button className="premium-btn" onClick={handleRegisterClick}>
+              Register
+            </button>
+            <button className="premium-btn">Login</button>
+          </div>
+
+          {/* Centered app name */}
+          <h1 className="app-title">project-X</h1>
+        </>
+      )}
+
+      {showRegister && (
+        <div className="form-container">
+          <h2 className="form-title">Register</h2>
+          <form className="register-form">
+            <input type="text" placeholder="Username" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button type="submit" className="submit-btn">
+              Register
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }
